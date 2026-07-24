@@ -23,10 +23,10 @@ function buildPrompt(query, items) {
   const itemDesc = items
     .map((item, i) => {
       const platform = platformNames[item.platform] || item.platform;
-      const original = item.originalPrice ? `（原价 ¥${item.originalPrice}）` : '';
+      const original = (item.original_price || item.originalPrice) ? `（原价 ¥${item.original_price || item.originalPrice}）` : '';
       const rating = item.rating ? `评分 ${item.rating}` : '';
       const sales = item.sales ? `销量 ${item.sales}` : '';
-      const shop = item.shop ? `店铺: ${item.shop}` : '';
+      const shop = (item.shop_name || item.shop) ? `店铺: ${item.shop_name || item.shop}` : '';
       return `${i + 1}. [${platform}] ${item.title} - ¥${item.price}${original} ${rating} ${sales} ${shop}`;
     })
     .join('\n');

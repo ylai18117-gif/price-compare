@@ -45,18 +45,53 @@ function rankItems(items) {
 }
 
 /**
- * 从预抓取数据中搜索
+ * 规范化字段名（兼容 camelCase 和 snake_case）
+ */
+function normalizeItem(item) {
+  return {
+    ...item,
+    original_price: item.original_price || item.originalPrice || 0,
+    shop_name: item.shop_name || item.shop || '',
+    platform_name: item.platform_name || {
+      jd: '京东', taobao: '淘宝', pdd: '拼多多',
+      meituan: '美团', douyin: '抖音'
+    }[item.platform] || item.platform,
+  };
+}
+
+/**
+ * 从预抓取数据中搜索（兼容扁平数组和 keywords 对象两种格式）
  */
 function searchCachedData(keyword) {
   const results = [];
+
+  // 格式1: 扁平数组 [...]
+  if (Array.isArray(shoppingData)) {
+    for (const item of shoppingData) {
+      if (fuzzyMatch(item.title || '', keyword) || fuzzyMatch(item.category || '', keyword)) {
+        results.push(normalizeItem(item));
+      }
+    }
+    return results;
+  }
+
+  // 格式2: {items: [...]}
+  if (Array.isArray(shoppingData.items)) {
+    for (const item of shoppingData.items) {
+      if (fuzzyMatch(item.title || '', keyword) || fuzzyMatch(item.category || '', keyword)) {
+        results.push(normalizeItem(item));
+      }
+    }
+    return results;
+  }
+
+  // 格式3: {keywords: {关键词: [...]}}
   for (const [key, items] of Object.entries(shoppingData.keywords || {})) {
-    // 关键词匹配：数据key匹配 或 商品标题匹配
     if (key.includes(keyword) || keyword.includes(key)) {
-      results.push(...items);
+      results.push(...items.map(normalizeItem));
     } else {
-      // 逐条标题模糊匹配
       const matched = items.filter(item => fuzzyMatch(item.title, keyword));
-      results.push(...matched);
+      results.push(...matched.map(normalizeItem));
     }
   }
   return results;
@@ -94,13 +129,14 @@ async function fetchJDSearch(keyword) {
       id: `jd_live_${idx}`,
       title: w.wname || w.name || w.title || '京东商品',
       price: parseFloat(w.jdPrice || w.price || w.finalPrice || 0),
-      originalPrice: parseFloat(w.mPrice || w.jdPrice || w.price || 0),
+      original_price: parseFloat(w.mPrice || w.jdPrice || w.price || 0),
       platform: 'jd',
+      platform_name: '京东',
       image: w.imageurl || w.img || '',
       url: w.wareId ? `https://item.m.jd.com/product/${w.wareId}.html` : '',
       rating: parseFloat(w.good || w.commentScore || '4.5'),
       sales: parseInt(w.comments || w.commentCount || '0') || 0,
-      shop: w.shopName || '京东自营',
+      shop_name: w.shopName || '京东自营',
       source: 'live',
     }));
   } catch (e) {
@@ -135,13 +171,14 @@ function generateSimulatedData(keyword) {
       id: `sim_${Date.now()}_${i}`,
       title: `${keyword} 优质${['经典款', '升级版', '家庭装', '特惠装', '旗舰款'][i % 5]}`,
       price,
-      originalPrice: Math.round(price * (1.1 + Math.random() * 0.4) * 100) / 100,
+      original_price: Math.round(price * (1.1 + Math.random() * 0.4) * 100) / 100,
       platform: p.name,
+      platform_name: { jd: '京东', taobao: '淘宝', pdd: '拼多多' }[p.name] || p.name,
       image: '',
       url: '',
       rating: Math.round((4.0 + Math.random() * 0.9) * 10) / 10,
       sales: Math.floor(Math.random() * 50000) + 500,
-      shop: p.shop,
+      shop_name: p.shop,
       source: 'simulated',
     });
   }

@@ -28,8 +28,9 @@ function rankDeals(items) {
 
   return items
     .map(item => {
-      const discount = item.originalPrice
-        ? (1 - item.price / item.originalPrice)
+      const origPrice = item.original_price || item.originalPrice || 0;
+      const discount = origPrice
+        ? (1 - item.price / origPrice)
         : 0;
       const discountScore = discount * 100 * 0.4;
       const ratingScore = ((item.rating || 0) / 5) * 100 * 0.35;
@@ -41,19 +42,55 @@ function rankDeals(items) {
 }
 
 /**
- * 从缓存数据搜索团购
+ * 规范化字段名
+ */
+function normalizeItem(item) {
+  return {
+    ...item,
+    original_price: item.original_price || item.originalPrice || 0,
+    shop_name: item.shop_name || item.shop || '',
+    platform_name: item.platform_name || {
+      meituan: '美团', douyin: '抖音'
+    }[item.platform] || item.platform,
+  };
+}
+
+/**
+ * 从缓存数据搜索团购（兼容多种格式）
  */
 function searchCachedData(keyword) {
   const results = [];
+
+  // 格式1: 扁平数组
+  if (Array.isArray(groupbuyData)) {
+    for (const item of groupbuyData) {
+      if (fuzzyMatch(item.title || '', keyword) || fuzzyMatch(item.shop_name || item.shop || '', keyword)) {
+        results.push(normalizeItem(item));
+      }
+    }
+    return results;
+  }
+
+  // 格式2: {items: [...]}
+  if (Array.isArray(groupbuyData.items)) {
+    for (const item of groupbuyData.items) {
+      if (fuzzyMatch(item.title || '', keyword) || fuzzyMatch(item.shop_name || item.shop || '', keyword)) {
+        results.push(normalizeItem(item));
+      }
+    }
+    return results;
+  }
+
+  // 格式3: {keywords: {...}}
   for (const [key, items] of Object.entries(groupbuyData.keywords || {})) {
     if (key.includes(keyword) || keyword.includes(key)) {
-      results.push(...items);
+      results.push(...items.map(normalizeItem));
     } else {
       const matched = items.filter(
         item =>
-          fuzzyMatch(item.title, keyword) || fuzzyMatch(item.shop || '', keyword)
+          fuzzyMatch(item.title, keyword) || fuzzyMatch(item.shop || item.shop_name || '', keyword)
       );
-      results.push(...matched);
+      results.push(...matched.map(normalizeItem));
     }
   }
   return results;
@@ -108,9 +145,10 @@ function generateSimulatedDeals(keyword) {
       id: `sim_tuan_${Date.now()}_${i}`,
       title: t.title,
       price,
-      originalPrice: Math.round(price * (1.3 + Math.random() * 0.5) * 100) / 100,
+      original_price: Math.round(price * (1.3 + Math.random() * 0.5) * 100) / 100,
       platform: t.platform,
-      shop: t.shop,
+      platform_name: { meituan: '美团', douyin: '抖音' }[t.platform] || t.platform,
+      shop_name: t.shop,
       rating: t.rating,
       sales: Math.floor(Math.random() * 3000) + 100,
       details: `含${keyword}主食+小食+饮品，到店核销`,

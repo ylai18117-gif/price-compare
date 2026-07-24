@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="省钱比价 - 京东、淘宝、拼多多、美团、抖音多平台商品比价工具，AI 智能分析帮你花最少的钱">
+  <meta name="theme-color" content="#e4393c">
+  <title>省钱比价 · 全网比价，一搜就省</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 顶部氛围装饰 -->
+  <div class="ambient" aria-hidden="true">
+    <span class="ambient__glyph">¥</span>
+    <span class="ambient__glyph">省</span>
+    <span class="ambient__glyph">比</span>
+  </div>
+
+  <!-- 页头 -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="省钱比价首页">
+        <span class="brand__mark">省</span>
+        <span class="brand__text">
+          <span class="brand__name">省钱比价</span>
+          <span class="brand__slogan">全网比价 · 一搜就省</span>
+        </span>
+      </a>
+      <div class="brand-stats" aria-label="已帮用户省钱">
+        <span class="brand-stats__num">¥1.2亿+</span>
+        <span class="brand-stats__label">累计帮省</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 搜索区（红色主视觉） -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero__tip">同一件商品，不同平台最多差 <strong>37%</strong>，搜一下就知道</p>
+      <form class="search-form" id="search-form" role="search" autocomplete="off">
+        <label for="search-input" class="visually-hidden">搜索商品</label>
+        <div class="search-box" id="search-box">
+          <input type="text" id="search-input" placeholder="输入商品名称，如：牛奶、纸巾、洗衣液"
+                 aria-label="搜索商品名称">
+          <button type="submit" id="search-btn" class="search-btn" aria-label="搜索">
+            <span class="search-btn__icon" aria-hidden="true">🔍</span>
+            <span class="search-btn__text">搜 索</span>
+          </button>
+        </div>
+      </form>
+      <div class="search-history" id="search-history" hidden>
+        <span class="search-history__label">历史搜索</span>
+        <div class="search-history__chips" id="history-chips"></div>
+        <button type="button" class="search-history__clear" id="history-clear" aria-label="清空历史搜索">🗑 清空</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 主内容 -->
+  <main class="main">
+    <div class="container">
+
+      <!-- Tab 切换 -->
+      <nav class="tabs" role="tablist" aria-label="比价模式">
+        <button class="tab is-active" id="tab-shopping" role="tab" aria-selected="true" data-mode="shopping">
+          <span class="tab__icon" aria-hidden="true">🛒</span>购物比价
+        </button>
+        <button class="tab" id="tab-tuan" role="tab" aria-selected="false" data-mode="tuan">
+          <span class="tab__icon" aria-hidden="true">🎫</span>团购比价
+        </button>
+      </nav>
+
+      <!-- 工具栏：排序 + 结果统计 -->
+      <div class="toolbar" id="toolbar" hidden>
+        <div class="sort-group" role="group" aria-label="排序方式">
+          <button class="sort-btn is-active" data-sort="recommend">✨ 综合推荐</button>
+          <button class="sort-btn" data-sort="price">💰 价格最低</button>
+          <button class="sort-btn" data-sort="sales">🔥 销量优先</button>
+        </div>
+        <p class="result-count" id="result-count"></p>
+      </div>
+
+      <!-- 加载中 -->
+      <div class="loading" id="loading" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="loading__text" id="loading-text">正在搜索各大平台...</p>
+      </div>
+
+      <!-- 错误提示 -->
+      <div class="error-state" id="error-state" hidden>
+        <span class="error-state__icon" aria-hidden="true">😵</span>
+        <p class="error-state__text" id="error-text">网络开小差了</p>
+        <button type="button" class="error-state__retry" id="error-retry">重试一次</button>
+      </div>
+
+      <!-- 空状态 -->
+      <div class="empty-state" id="empty-state" hidden>
+        <span class="empty-state__icon" aria-hidden="true">🛍️</span>
+        <p class="empty-state__title">还没有找到相关商品</p>
+        <p class="empty-state__desc">试试搜索：牛奶、纸巾、洗衣液、薯片、面膜...</p>
+      </div>
+
+      <!-- 商品结果 -->
+      <section class="results" id="results" aria-live="polite"></section>
+
+      <!-- AI 智能分析面板 -->
+      <section class="ai-panel" id="ai-panel" hidden>
+        <div class="ai-panel__header">
+          <button type="button" class="ai-panel__toggle" id="ai-toggle" aria-expanded="true" aria-controls="ai-body">
+            <span class="ai-panel__title">
+              <span class="ai-panel__sparkle" aria-hidden="true">✨</span>
+              AI 智能分析
+            </span>
+            <span class="ai-panel__arrow" id="ai-arrow" aria-hidden="true">▾</span>
+          </button>
+          <button type="button" class="ai-analyze-btn" id="ai-analyze-btn">
+            <span class="ai-analyze-btn__spark" aria-hidden="true">⚡</span>
+            让 AI 帮我选最划算的
+          </button>
+        </div>
+        <div class="ai-panel__body" id="ai-body">
+          <div class="ai-content-wrap">
+            <div class="ai-content" id="ai-content">
+              <p class="ai-placeholder">点击上方按钮，AI 将综合价格、优惠券、销量和店铺信誉，<br>告诉你哪一件最值得入手 🤔</p>
+            </div>
+            <button type="button" class="ai-close" id="ai-close" hidden>收起面板</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 页脚：数据来源说明 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="legend">
+        <h2 class="legend__title">数据来源说明</h2>
+        <p class="legend__desc">
+          商品数据来自各平台公开页面与官方开放接口，价格实时抓取，可能存在延迟，下单请以平台实际价格为准。
+        </p>
+        <div class="legend__badges">
+          <span class="legend-badge legend-badge--real">● 真实数据：来自平台实时抓取</span>
+          <span class="legend-badge legend-badge--mock">● 模拟数据：演示样例，仅供参考</span>
+        </div>
+      </div>
+      <div class="platforms">
+        <span class="platforms__label">已覆盖平台：</span>
+        <span class="platform-chip" style="--chip-color:#e4393c">京东</span>
+        <span class="platform-chip" style="--chip-color:#ff5000">淘宝</span>
+        <span class="platform-chip" style="--chip-color:#e02e24">拼多多</span>
+        <span class="platform-chip" style="--chip-color:#ffc300;color:#333">美团</span>
+        <span class="platform-chip" style="--chip-color:#111111">抖音</span>
+      </div>
+      <p class="copyright">© 2026 省钱比价 · 数据仅供比价参考，不构成购买建议</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

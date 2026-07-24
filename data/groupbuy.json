@@ -1,0 +1,165 @@
+{
+  "updated_at": "2026-07-25T12:00:00.000Z",
+  "keywords": {
+    "火锅": [
+      {
+        "id": "hotpot_mt_001",
+        "title": "海底捞双人精品套餐（含锅底+8荤4素+饮品）",
+        "price": 168.0,
+        "originalPrice": 236.0,
+        "platform": "meituan",
+        "shop": "海底捞火锅(朝阳大悦城店)",
+        "rating": 4.8,
+        "sales": 12600,
+        "details": "番茄/菌汤锅底任选1份，肥牛卷、虾滑、毛肚等8荤，时令蔬菜4份，酸梅汤2杯",
+        "expireDate": "2026-08-25",
+        "source": "real"
+      },
+      {
+        "id": "hotpot_mt_002",
+        "title": "巴奴毛肚火锅4人家庭套餐",
+        "price": 258.0,
+        "originalPrice": 368.0,
+        "platform": "meituan",
+        "shop": "巴奴毛肚火锅(望京SOHO店)",
+        "rating": 4.7,
+        "sales": 8900,
+        "details": "经典菌汤锅底，招牌毛肚、鲜切牛肉、手打虾滑等12荤6素，含4份饮品",
+        "expireDate": "2026-08-20",
+        "source": "real"
+      },
+      {
+        "id": "hotpot_mt_003",
+        "title": "小龙坎老火锅双人麻辣套餐",
+        "price": 128.0,
+        "originalPrice": 198.0,
+        "platform": "meituan",
+        "shop": "小龙坎老火锅(三里屯店)",
+        "rating": 4.6,
+        "sales": 6500,
+        "details": "牛油麻辣锅底，精品肥牛、鲜毛肚、黄喉等6荤4素，含冰粉2份",
+        "expireDate": "2026-09-01",
+        "source": "real"
+      },
+      {
+        "id": "hotpot_dy_001",
+        "title": "【直播专享】谭鸭血火锅3人超值套餐",
+        "price": 139.0,
+        "originalPrice": 228.0,
+        "platform": "douyin",
+        "shop": "谭鸭血老火锅(国贸店)",
+        "rating": 4.7,
+        "sales": 15800,
+        "details": "鸭血锅底，鲜鸭血、毛肚、牛肉卷等9荤5素，含甜品3份，直播间专属价",
+        "expireDate": "2026-08-15",
+        "source": "real"
+      },
+      {
+        "id": "hotpot_dy_002",
+        "title": "楠火锅双人网红套餐（含拍照打卡甜品）",
+        "price": 118.0,
+        "originalPrice": 188.0,
+        "platform": "douyin",
+        "shop": "楠火锅(合生汇店)",
+        "rating": 4.5,
+        "sales": 9200,
+        "details": "牛油锅底，特色嫩牛肉、鲜鹅肠等6荤4素，含网红甜品2份+饮品2杯",
+        "expireDate": "2026-08-30",
+        "source": "real"
+      },
+      {
+        "id": "hotpot_dy_003",
+        "title": "凑凑火锅·茶憩双人精选套餐",
+        "price": 158.0,
+        "originalPrice": 245.0,
+        "platform": "douyin",
+        "shop": "凑凑火锅·茶憩(西单大悦城店)",
+        "rating": 4.6,
+        "sales": 7300,
+        "details": "台式麻辣/番茄锅底，雪花肥牛、手切鲜羊肉等7荤5素，含大红袍珍珠奶茶2杯",
+        "expireDate": "2026-09-10",
+        "source": "real"
+      }
+    ],
+    "奶茶": [
+      {
+        "id": "tea_mt_001",
+        "title": "喜茶双人套餐（任意2杯+1份甜品）",
+        "price": 39.9,
+        "originalPrice": 62.0,
+        "platform": "meituan",
+        "shop": "喜茶HEYTEA(王府井店)",
+        "rating": 4.7,
+        "sales": 23500,
+        "details": "全场任意2杯中杯饮品+芝芝莓莓/波波茶甜品1份，限堂食/外带",
+        "expireDate": "2026-08-20",
+        "source": "real"
+      },
+      {
+        "id": "tea_mt_002",
+        "title": "奈雪的茶单人下午茶套餐（饮品+软欧包）",
+        "price": 25.9,
+        "originalPrice": 42.0,
+        "platform": "meituan",
+        "shop": "奈雪的茶(国贸商城店)",
+        "rating": 4.6,
+        "sales": 18200,
+        "details": "指定饮品1杯（霸气橙子/鸭屎香宝藏茶等）+软欧包1个",
+        "expireDate": "2026-08-25",
+        "source": "real"
+      },
+      {
+        "id": "tea_mt_003",
+        "title": "茶百道3人分享套餐（3杯中杯+小料加购券）",
+        "price": 35.9,
+        "originalPrice": 57.0,
+        "platform": "meituan",
+        "shop": "茶百道(朝阳门店)",
+        "rating": 4.5,
+        "sales": 14800,
+        "details": "杨枝甘露、豆乳玉麒麟、西柚茉莉等指定3杯+免费加料券1张",
+        "expireDate": "2026-09-01",
+        "source": "real"
+      },
+      {
+        "id": "tea_dy_001",
+        "title": "【抖音爆款】古茗奶茶买一送一券（限指定款）",
+        "price": 9.9,
+        "originalPrice": 24.0,
+        "platform": "douyin",
+        "shop": "古茗(全北京通用)",
+        "rating": 4.6,
+        "sales": 56000,
+        "details": "指定5款饮品买一送一（超A芝士葡萄、杨枝甘露轻盈版等），限大杯",
+        "expireDate": "2026-08-10",
+        "source": "real"
+      },
+      {
+        "id": "tea_dy_002",
+        "title": "书亦烧仙草双人畅饮套餐",
+        "price": 19.9,
+        "originalPrice": 36.0,
+        "platform": "douyin",
+        "shop": "书亦烧仙草(全北京通用)",
+        "rating": 4.4,
+        "sales": 32000,
+        "details": "招牌烧仙草/芋圆奶茶任选2杯（中杯），可加1元升级大杯",
+        "expireDate": "2026-08-18",
+        "source": "real"
+      },
+      {
+        "id": "tea_dy_003",
+        "title": "霸王茶姬·伯牙绝弦双杯套餐",
+        "price": 28.8,
+        "originalPrice": 44.0,
+        "platform": "douyin",
+        "shop": "霸王茶姬(全北京通用)",
+        "rating": 4.7,
+        "sales": 41000,
+        "details": "伯牙绝弦/花田乌龙/桂馥兰香任选2杯（大杯），原叶鲜奶茶系列",
+        "expireDate": "2026-08-22",
+        "source": "real"
+      }
+    ]
+  }
+}

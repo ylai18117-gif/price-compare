@@ -111,7 +111,7 @@ export async function onRequest(context) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 30000);
 
-    const aiResp = await fetch('https://api.sensenova.cn/v1/chat/completions', {
+    const aiResp = await fetch('https://token.sensenova.cn/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

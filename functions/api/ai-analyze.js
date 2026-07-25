@@ -109,7 +109,7 @@ export async function onRequest(context) {
 
     // 调用商汤 API（流式）
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 30000);
+    const timeout = setTimeout(() => controller.abort(), 90000);
 
     const aiResp = await fetch('https://token.sensenova.cn/v1/chat/completions', {
       method: 'POST',

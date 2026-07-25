@@ -118,18 +118,18 @@ export async function onRequest(context) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-v4-flash',
+        model: 'sensenova-6.7-flash-lite',
         stream: true,
         messages: [
           {
             role: 'system',
             content:
-              '你是一位专业的消费顾问和比价专家，擅长分析各平台商品价格、性价比，给出实用的购物建议。',
+              '你是一位专业的消费顾问和比价专家，擅长分析各平台商品价格、性价比，给出实用的购物建议。请直接输出分析结果，不要输出思考过程。',
           },
           { role: 'user', content: prompt },
         ],
         temperature: 0.7,
-        max_tokens: 1500,
+        max_tokens: 2000,
       }),
       signal: controller.signal,
     });
